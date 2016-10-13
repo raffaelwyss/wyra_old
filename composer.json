@@ -1,6 +1,7 @@
 {
     "name": "wyra",
     "require": {
+        "symfony/framework-standard-edition": "^3.1"
     },
     "autoload": {
         "psr-0": { "Rawy": "src/" }
