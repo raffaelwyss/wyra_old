@@ -4,4 +4,7 @@
 out
 gen
 
+# WyRa Foldern
+vendor/
+
 
