@@ -1,0 +1,8 @@
+{
+    "name": "wyra",
+    "require": {
+    },
+    "autoload": {
+        "psr-0": { "Rawy": "src/" }
+    }
+}
