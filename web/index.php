@@ -1,3 +1,3 @@
 <?php
 
-echo 'WyRa';
+header("Location: /app.php");
