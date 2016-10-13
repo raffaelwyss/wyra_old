@@ -1,0 +1,11 @@
+parameters:
+    database_url:   'mysql:123'
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    locale: de
+
+    secret: '4N816nLxhf9Eo85p6oaGW1bmI3hK3q3o'
