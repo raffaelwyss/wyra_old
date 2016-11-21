@@ -1,5 +1,7 @@
 <?php
+
 namespace Wyra\Kernel;
+
 use Wyra\Kernel\PHP\GET;
 use Wyra\Kernel\PHP\POST;
 use Wyra\Kernel\PHP\SESSION;
@@ -61,6 +63,11 @@ class Kernel
     {
         // Session Start
         session_start();
+
+        // Initialize Exception & Error-Handler
+        set_error_handler(array(new Error(), 'handler'));
+        set_exception_handler(array( new Exception(), 'handler'));
+
 
         // Load the Parameters & Variables
         self::$get = new GET();

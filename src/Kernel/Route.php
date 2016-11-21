@@ -58,16 +58,17 @@ class Route
 
     private function getRoute()
     {
+
         $return = array();
-        $return['Plugin'] = '???';
-        $reutrn['SubPlugin'] = '???';
+        $return['Plugin'] = 'Base';
+        $return['SubPlugin'] = 'Home';
         $route = explode('|', Kernel::$get->get('route'));
         foreach ($route AS $routeitem) {
             $routeitemex = explode('=', $routeitem);
             if (count($routeitemex) > 1) {
-                if (strtolower($routeitemex[0]) == 'plugin') {
+                if (strtolower($routeitemex[0]) === 'plugin') {
                     $return['Plugin'] = $routeitemex['1'];
-                } else if (strtolower($routeitemex[0]) == 'subplugin') {
+                } else if (strtolower($routeitemex[0]) === 'subplugin') {
                     $return['SubPlugin'] = $routeitemex['1'];
                 } else {
                     $return[strtolower($routeitemex[0])] = $routeitemex[1];
