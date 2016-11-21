@@ -2,7 +2,7 @@
 
 
 /**
- * This file is a part of WyRa
+ * Crypt of WyRa
  *
  * Copyright (c) 2016, Raffael Wyss <raffael.wyss@gmail.com>
  * All rights reserved.
@@ -51,14 +51,26 @@ class Crypt
     private $mode = MCRYPT_MODE_ECB;
     private $rand = MCRYPT_RAND;
 
-
-
+    /**
+     * Crypting Data
+     *
+     * @param string $data
+     *
+     * @return string
+     */
     public function crypt($data)
     {
         return mcrypt_encrypt($this->cypher, $this->key, $data, $this->mode);
     }
 
-    public function uncrypt($data)
+    /**
+     * Decripting Data
+     *
+     * @param string $data
+     *
+     * @return string
+     */
+    public function decrypt($data)
     {
         return mcrypt_decrypt($this->cypher, $this->key, $data, $this->mode);
     }
