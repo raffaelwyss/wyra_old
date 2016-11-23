@@ -1,10 +1,11 @@
 <?php
 
-namespace Wyra\Kernel\Storage;
+namespace Wyra\Plugin\Base\View;
 
+use Wyra\Kernel\MVC\View;
 
 /**
- * Storage Getter & Setter Baseclass
+ * View from Home-Class WyRa
  *
  * Copyright (c) 2016, Raffael Wyss <raffael.wyss@gmail.com>
  * All rights reserved.
@@ -42,31 +43,7 @@ namespace Wyra\Kernel\Storage;
  * @copyright   2016 Raffael Wyss. All rights reserved.
  * @license     http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-abstract class BaseGetterSetter
+class Home extends View
 {
-    /** @var array Enthält die Daten */
-    protected $data = array();
-
-    /**
-     * @param string $name
-     *
-     * @return mixed|null
-     */
-    public function get($name)
-    {
-        if (isset($this->data[$name])) {
-            return $this->data[$name];
-        }
-        return null;
-    }
-
-    /**
-     * @param string $name
-     * @param mixed $value
-     */
-    public function set($name, $value)
-    {
-        $this->data[$name] = $value;
-    }
 
 }

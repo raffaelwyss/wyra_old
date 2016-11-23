@@ -52,7 +52,7 @@ class Route
         $route = $this->getRoute();
 
         // Klasse aufbauen und ausführen
-        $className = '\\Wyra\\Plugin\\'.$route['Plugin'].'\\'.$route['SubPlugin'];
+        $className = '\\Wyra\\Plugin\\'.$route['Plugin'].'\\Controller\\'.$route['SubPlugin'];
         new $className($route);
     }
 

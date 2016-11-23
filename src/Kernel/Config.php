@@ -1,10 +1,11 @@
 <?php
 
-namespace Wyra\Kernel\Storage;
+namespace Wyra\Kernel;
 
+use Wyra\Kernel\Storage\BaseGetterSetter;
 
 /**
- * Storage Getter & Setter Baseclass
+ * Config of WyRa
  *
  * Copyright (c) 2016, Raffael Wyss <raffael.wyss@gmail.com>
  * All rights reserved.
@@ -42,31 +43,42 @@ namespace Wyra\Kernel\Storage;
  * @copyright   2016 Raffael Wyss. All rights reserved.
  * @license     http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-abstract class BaseGetterSetter
+class Config extends BaseGetterSetter
 {
-    /** @var array Enthält die Daten */
-    protected $data = array();
 
     /**
-     * @param string $name
+     * Config constructor.
      *
-     * @return mixed|null
+     * @param string $file
      */
-    public function get($name)
+    public function __construct($file = '../app/config/app.conf')
     {
-        if (isset($this->data[$name])) {
-            return $this->data[$name];
-        }
-        return null;
+        $this->data = json_decode(file_get_contents($file), true);
+        $this->loadConfigData($this->data, dirname($file));
     }
 
     /**
-     * @param string $name
-     * @param mixed $value
+     * Load the Data from Config-File
+     *
+     * @param string $data
+     * @param string $folder
+     * @param string $baseString
      */
-    public function set($name, $value)
+    private function loadConfigData($data = '', $folder = '', $baseString = '')
     {
-        $this->data[$name] = $value;
+        foreach ($data AS $key => $value) {
+            $startString = '';
+            if ($baseString != '') {
+                $startString = $baseString.'.';
+            }
+            if (strpos($value, '.conf')) {
+                $filecontent = json_decode(file_get_contents($folder.'/'.$value), true);
+                $this->data[$key] = $filecontent;
+                $this->loadConfigData($filecontent, $folder, $key);
+            } else {
+                $this->data[$startString.$key] = $value;
+            }
+        }
     }
 
 }

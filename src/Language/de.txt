@@ -1,0 +1,1 @@
+FOLGENDEVIEWFEHLT=Beim Controller '%s' fehlt die View

@@ -86,6 +86,7 @@ class Error
                 $error["file"],
                 $error["line"]
             );
+
         }
     }
 

@@ -58,6 +58,12 @@ class Kernel
 
     /** @var null|Crypt */
     public static $crypt = null;
+
+    /** @var null|Config */
+    public static $config = null;
+
+    /** @var null|Language */
+    public static $language = null;
     
     public function start()
     {
@@ -68,6 +74,8 @@ class Kernel
         set_error_handler(array(new Error(), 'handler'));
         set_exception_handler(array( new Exception(), 'handler'));
 
+        // Initialize Language
+        self::$language = new Language();
 
         // Load the Parameters & Variables
         self::$get = new GET();
@@ -76,6 +84,9 @@ class Kernel
 
         // Initialize The Crypter
         self::$crypt = new Crypt();
+
+        // Initialize Config
+        self::$config = new Config();
 
         // Start the Routing
         $route = new Route();

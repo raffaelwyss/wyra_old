@@ -2,6 +2,8 @@
 
 namespace Wyra\Kernel\MVC;
 
+use Wyra\Kernel\Kernel;
+use Exception;
 
 /**
  * Controller of WyRa
@@ -44,10 +46,37 @@ namespace Wyra\Kernel\MVC;
  */
 class Controller
 {
+    /** @var View|null  */
+    private $view = null;
+
+    /** @var array */
+    private $arguments = array();
+
 
     public function __construct($args = array())
     {
         print_r($args);
+        $this->arguments = $args;
+        $this->setView();
+        $this->getView();
     }
+
+    /**
+     * @return null|View
+     */
+    public function getView()
+    {
+        if ($this->view) {
+            return $this->view;
+        }
+        throw new Exception(Kernel::$language->getText('FOLGENDEVIEWFEHLT', get_class($this)));
+    }
+
+    private function setView()
+    {
+        $className = '\\Wyra\\Plugin\\'.$this->arguments['Plugin'].'\\View\\'.$this->arguments['SubPlugin'];
+        $this->view = new $className();
+    }
+
 
 }

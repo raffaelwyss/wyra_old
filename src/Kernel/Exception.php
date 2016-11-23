@@ -54,7 +54,9 @@ class Exception
         $data['message'] = $exception->getMessage();
         $data['file'] = $exception->getFile();
         $data['line'] = $exception->getLine();
-        $data['trace'] = $exception->getTrace();
+        if (Kernel::$config->get('exceptionTracing')) {
+            $data['trace'] = $exception->getTrace();
+        }
         echo json_encode($data);
     }
 }
