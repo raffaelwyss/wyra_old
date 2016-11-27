@@ -55,6 +55,14 @@ class Config extends BaseGetterSetter
     {
         $this->data = json_decode(file_get_contents($file), true);
         $this->loadConfigData($this->data, dirname($file));
+        $this->setDefaultConfig();
+    }
+
+    private function setDefaultConfig()
+    {
+        if ($this->get('errorReporting') !== '') {
+            error_reporting($this->get('errorReporting'));
+        }
     }
 
     /**
@@ -79,6 +87,7 @@ class Config extends BaseGetterSetter
                 $this->data[$startString.$key] = $value;
             }
         }
+        $this->data['rootPath'] = dirname(__DIR__);
     }
 
 }

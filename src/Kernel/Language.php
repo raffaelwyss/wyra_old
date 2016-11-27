@@ -56,7 +56,7 @@ class Language extends BaseGetterSetter
         $this->loadLanguageData($language);
     }
 
-    public function getText($label, $params)
+    public function getText($label, $params = array())
     {
         $label = $this->get($label);
         return vsprintf($label, $params);

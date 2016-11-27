@@ -1,8 +1,10 @@
 <?php
 
+namespace Wyra\Kernel\View;
+
 
 /**
- * Routing of WyRa
+ * View of WyRa
  *
  * Copyright (c) 2016, Raffael Wyss <raffael.wyss@gmail.com>
  * All rights reserved.
@@ -40,60 +42,19 @@
  * @copyright   2016 Raffael Wyss. All rights reserved.
  * @license     http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-
-namespace Wyra\Kernel;
-
-use Wyra\Kernel\MVC\Controller;
-
-class Route
+class ViewJSON extends View
 {
-
     /**
-     * Routuing
-     */
-    public function route()
-    {
-        // Bestimmung der ganzen Informationen
-        $route = $this->getRoute();
-
-        // Klasse aufbauen und ausführen
-        $className = '\\Wyra\\Plugin\\'.$route['Plugin'].'\\Controller\\'.$route['SubPlugin'];
-
-        /** @var Controller $instance */
-        $instance = new $className($route);
-        $instance->display();
-    }
-
-    /**
-     * returning for the routing path
+     * Gibt die Daten vom Json aus
      *
-     * @return array
+     * @param $data
      */
-    private function getRoute()
+    public function show($data, $echo = true)
     {
-        $return = array();
-        $return['Plugin'] = 'Base';
-        $return['SubPlugin'] = 'Home';
-        $return['Api'] = 'html';
-        $route = explode('|', Kernel::$get->get('route'));
-        foreach ($route AS $routeitem) {
-            $routeitemex = explode('=', $routeitem);
-            if (count($routeitemex) > 1) {
-                if (strtolower($routeitemex[0]) === 'plugin') {
-                    $return['Plugin'] = $routeitemex['1'];
-                } else if (strtolower($routeitemex[0]) === 'subplugin') {
-                    $return['SubPlugin'] = $routeitemex['1'];
-                } else if (strtolower($routeitemex[0]) === 'api') {
-                    $return['Api'] = $routeitemex['1'];
-                }else {
-                    $return[strtolower($routeitemex[0])] = $routeitemex[1];
-                }
-            }
+        $return = json_encode($data);
+        if ($echo) {
+            echo $return;
         }
-
-
         return $return;
     }
-
-
 }

@@ -1,13 +1,12 @@
 <?php
 
-namespace Wyra\Kernel\MVC;
+namespace Wyra\Kernel\View;
 
+use Smarty;
 use Wyra\Kernel\Kernel;
-use Exception;
-use RuntimeException;
 
 /**
- * Controller of WyRa
+ * View of WyRa
  *
  * Copyright (c) 2016, Raffael Wyss <raffael.wyss@gmail.com>
  * All rights reserved.
@@ -45,82 +44,52 @@ use RuntimeException;
  * @copyright   2016 Raffael Wyss. All rights reserved.
  * @license     http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class Controller
+class ViewSMARTY extends View
 {
-    /** @var View|null  */
-    private $view = null;
 
-    /** @var array */
-    private $arguments = array();
+    /** @var null|Smarty $smarty */
+    private $smarty = null;
+
+
+    public function __construct()
+    {
+        $this->smarty = new Smarty();
+        $this->setUpSmarty();
+    }
+
 
     /**
-     * Controller constructor.
+     * Gibt die Daten vom HTML aus
      *
-     * @param array $args
+     * @param $data
      */
-    public function __construct($args = array())
+    public function show($data, $args = [], $echo = true)
     {
-        $this->arguments = $args;
-        $this->setView();
-        $this->getView();
-    }
-
-    /**
-     * Anzeige der Daten
-     */
-    public function display($data = array())
-    {
-        if (!isset($this->arguments['Api'])) {
-            throw new RuntimeException('ANZEIGENICHTIMPLEMENTIERT');
+        $return = $data;
+        if ($echo) {
+            $this->smarty->display(Kernel::$config->get('rootPath').'/Plugin/Base/Template/markup.tpl');
         }
-        switch ($this->arguments['Api']) {
-            case 'smarty':
-                $this->getView()->show($this->getData(), 'smarty', $this->arguments);
-                break;
-            case 'json':
-                $this->getView()->show($this->getData(), 'json');
-                break;
-            default:
-                throw new RuntimeException('ANZEIGENICHTIMPLEMENTIERT');
-                break;
-        }
+        return $return;
     }
 
-    public function getData()
+    private function getTemplate($template, $args)
     {
-        return array();
+        return Kernel::$config->get('rootPath').'/Plugin/'.$args['Plugin'].'/Template/'.$template;
     }
 
-    protected function addArguments($arguments)
-    {
-        $this->arguments = array_merge($this->arguments, $arguments);
-    }
 
-    protected function addArgument($name, $value)
+    private function setUpSmarty()
     {
-        $this->arguments[$name] = $value;
-    }
+        // Setzen der Template-Einstellungen
+        $path = Kernel::$config->get('rootPath')."/Kernel/View/Smarty";
+        $this->smarty->setTemplateDir($path . '/templates/');
+        $this->smarty->setCompileDir($path . '/templates_c/');
+        $this->smarty->setConfigDir($path . '/configs/');
+        $this->smarty->setCacheDir($path . '/cache/');
 
-    /**
-     * return the View-Instance
-     *
-     * @return null|View
-     */
-    private function getView()
-    {
-        if ($this->view) {
-            return $this->view;
-        }
-        throw new Exception(Kernel::$language->getText('FOLGENDEVIEWFEHLT', get_class($this)));
-    }
-
-    /**
-     * Set the view-instance
-     */
-    private function setView()
-    {
-        $className = '\\Wyra\\Plugin\\'.$this->arguments['Plugin'].'\\View\\'.$this->arguments['SubPlugin'];
-        $this->view = new $className();
+        // Allgemeines setzen
+        $this->smarty->caching = Smarty::CACHING_LIFETIME_CURRENT;
+        $this->smarty->debugging = false;
     }
 
 

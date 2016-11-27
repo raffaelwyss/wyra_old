@@ -2,6 +2,11 @@
 
 namespace Wyra\Kernel\MVC;
 
+use Wyra\Kernel\Kernel;
+use RuntimeException;
+use Wyra\Kernel\View\ViewHTML;
+use Wyra\Kernel\View\ViewJSON;
+use Wyra\Kernel\View\ViewSMARTY;
 
 /**
  * View of WyRa
@@ -44,5 +49,20 @@ namespace Wyra\Kernel\MVC;
  */
 class View
 {
-
+    public function show($data, $api = 'json', $args = array())
+    {
+        switch ($api) {
+            case 'json':
+                $viewJson = new ViewJSON();
+                $viewJson->show($data);
+                break;
+            case 'smarty':
+                $viewHTML = new ViewSMARTY();
+                $viewHTML->show($data, $args);
+                break;
+            default:
+                throw new RuntimeException(Kernel::$language->getText('AUSGABEFORMATNICHTIMPLEMENTIERT'));
+                break;
+        }
+    }
 }

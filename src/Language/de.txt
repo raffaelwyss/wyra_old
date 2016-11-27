@@ -1,1 +1,3 @@
 FOLGENDEVIEWFEHLT=Beim Controller '%s' fehlt die View
+ANZEIGENICHTIMPLEMENTIERT=Anzeige nicht implementiert
+AUSGABEFORMATNICHTIMPLEMENTIERT=Ausgabeformat ist nicht implementiert

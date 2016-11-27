@@ -82,11 +82,11 @@ class Kernel
         self::$post = new POST();
         self::$session = new SESSION();
 
-        // Initialize The Crypter
-        self::$crypt = new Crypt();
-
         // Initialize Config
         self::$config = new Config();
+
+        // Initialize The Crypter
+        self::$crypt = new Crypt();
 
         // Start the Routing
         $route = new Route();
