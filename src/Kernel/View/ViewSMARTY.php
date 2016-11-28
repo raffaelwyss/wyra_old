@@ -67,10 +67,18 @@ class ViewSMARTY extends View
     {
         $return = $data;
         if ($echo) {
+            $this->addContent($args['template'], $data, $args);
+            //$this->smarty->assign('content', 'xyz');
             $this->smarty->display(Kernel::$config->get('rootPath').'/Plugin/Base/Template/markup.tpl');
         }
         return $return;
     }
+
+    private function addContent($template, $data, $args)
+    {
+        $this->smarty->assign('content', $this->smarty->fetch($this->getTemplate($template, $args)));
+    }
+
 
     private function getTemplate($template, $args)
     {
@@ -88,7 +96,7 @@ class ViewSMARTY extends View
         $this->smarty->setCacheDir($path . '/cache/');
 
         // Allgemeines setzen
-        $this->smarty->caching = Smarty::CACHING_LIFETIME_CURRENT;
+        $this->smarty->caching = Smarty::CACHING_OFF;
         $this->smarty->debugging = false;
     }
 
