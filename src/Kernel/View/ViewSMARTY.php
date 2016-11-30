@@ -68,7 +68,6 @@ class ViewSMARTY extends View
         $return = $data;
         if ($echo) {
             $this->addContent($args['template'], $data, $args);
-            //$this->smarty->assign('content', 'xyz');
             $this->smarty->display(Kernel::$config->get('rootPath').'/Plugin/Base/Template/markup.tpl');
         }
         return $return;
@@ -76,6 +75,7 @@ class ViewSMARTY extends View
 
     private function addContent($template, $data, $args)
     {
+        $this->smarty->assign('data', $data);
         $this->smarty->assign('content', $this->smarty->fetch($this->getTemplate($template, $args)));
     }
 

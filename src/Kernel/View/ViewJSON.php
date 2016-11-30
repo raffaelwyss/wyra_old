@@ -49,7 +49,7 @@ class ViewJSON extends View
      *
      * @param $data
      */
-    public function show($data, $echo = true)
+    public function show($data, $args = [], $echo = true)
     {
         $return = json_encode($data);
         if ($echo) {

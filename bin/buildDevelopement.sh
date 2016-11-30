@@ -3,3 +3,5 @@
 composer install
 
 composer dump-autoload
+
+npm install
